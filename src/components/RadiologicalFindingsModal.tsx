@@ -1,5 +1,5 @@
 import React from 'react'
-import { Modal, Button } from 'react-bootstrap'
+import { Modal, Form } from 'react-bootstrap'
 
 const RadiologicalFindingsModal = (props: any) => {
     return (
@@ -16,16 +16,11 @@ const RadiologicalFindingsModal = (props: any) => {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <h4>Centered Modal</h4>
-                    <p>
-                        Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-                        dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-                        consectetur ac, vestibulum at eros.
-                    </p>
+                    <Form>
+                        <textarea name="radiological-findings" className='form-control' placeholder='Radiological Findings' /> <br />
+                        <input className='btn btn-danger' type="submit" value="Save" />
+                    </Form>
                 </Modal.Body>
-                <Modal.Footer>
-                    <Button onClick={props.onHide}>Close</Button>
-                </Modal.Footer>
             </Modal>
         </div>
     )

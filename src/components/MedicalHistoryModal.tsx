@@ -1,5 +1,5 @@
 import React from 'react'
-import { Modal, Button } from 'react-bootstrap'
+import { Modal, Form, FormSelect } from 'react-bootstrap'
 
 const MedicalHistoryModal = (props: any) => {
     return (
@@ -16,16 +16,50 @@ const MedicalHistoryModal = (props: any) => {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <h4>Centered Modal</h4>
-                    <p>
-                        Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-                        dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-                        consectetur ac, vestibulum at eros.
-                    </p>
+                    <Form>
+                        Cardiovascular:
+                        <FormSelect aria-label="Default select example" className='form-control' name='cardiovascular'>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </FormSelect> <br />
+                        Respiratory:
+                        <FormSelect aria-label="Default select example" name='respiratory'>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </FormSelect> <br />
+                        Gastrointestinal:
+                        <FormSelect aria-label="Default select example" name='gastrointestinal'>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </FormSelect> <br />
+                        Neutral:
+                        <FormSelect aria-label="Default select example" name='neutral'>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </FormSelect> <br />
+                        Hepatic:
+                        <FormSelect aria-label="Default select example" name='hepatic'>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </FormSelect> <br />
+                        Renal:
+                        <FormSelect aria-label="Default select example" name='renal'>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </FormSelect> <br />
+                        Endocrine:
+                        <FormSelect aria-label="Default select example" name='endocrine'>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </FormSelect> <br />
+                        Diabetes:
+                        <FormSelect aria-label="Default select example" name='diabetes'>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </FormSelect> <br />
+                        <input type="submit" className='btn btn-danger' value="Save" />
+                    </Form>
                 </Modal.Body>
-                <Modal.Footer>
-                    <Button onClick={props.onHide}>Close</Button>
-                </Modal.Footer>
             </Modal>
         </div>
     )
