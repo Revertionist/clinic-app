@@ -1,10 +1,9 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Row, Col, Stack, Container, Button } from 'react-bootstrap';
+import { Row, Col, Container, Card, ListGroup } from 'react-bootstrap';
 import { firestore } from '../lib/firebase';
 import { doc, getDoc } from "firebase/firestore";
-import { useNavigate } from 'react-router-dom';
 import ExamData from '../components/ExamData';
 
 interface PatientData {
@@ -14,7 +13,7 @@ interface PatientData {
     status: boolean;
     gender: string;
     bloodGroup: string;
-    matitalStatus: string;
+    maritalStatus: string;
     occupation: string;
     nationality: string;
     address: string;
@@ -23,8 +22,7 @@ interface PatientData {
 }
 
 const PatientDetails: React.FC = () => {
-    const navigate = useNavigate()
-    const { id } = useParams<{ id: string }>(); 
+    const { id } = useParams<{ id: string }>();
     const [patientData, setPatientData] = useState<PatientData | null>(null);
 
     useEffect(() => {
@@ -33,7 +31,7 @@ const PatientDetails: React.FC = () => {
             const docSnap = await getDoc(docRef);
 
             if (docSnap.exists()) {
-                setPatientData(docSnap.data() as PatientData); 
+                setPatientData(docSnap.data() as PatientData);
             } else {
                 console.log("No such document!");
             }
@@ -48,37 +46,40 @@ const PatientDetails: React.FC = () => {
 
     return (
         <div>
-            <br />
+            <Row>
+                <Col>
+                    <Card style={{ marginLeft: "150px", width: '40rem', backgroundColor: "black" }}>
+                        <ListGroup variant="flush">
+                            <ListGroup.Item>Patient Name: {patientData.patientName}</ListGroup.Item>
+                            <ListGroup.Item>Phone Number: {patientData.contact}</ListGroup.Item>
+                            <ListGroup.Item>Gender: {patientData.gender}</ListGroup.Item>
+                            <ListGroup.Item>Blood Group: {patientData.bloodGroup}</ListGroup.Item>
+                            <ListGroup.Item>Nationality: {patientData.nationality}</ListGroup.Item>
+                            <ListGroup.Item>Occupation: {patientData.occupation}</ListGroup.Item>
+                            <ListGroup.Item>Marital Status: {patientData.maritalStatus}</ListGroup.Item>
+                        </ListGroup>
+                    </Card>
+                </Col>
+                <Col>
+                    <Card style={{ width: '40rem', backgroundColor: "black" }}>
+                        <ListGroup variant="flush">
+                            <ListGroup.Item>Date Of Birth: {patientData.dateOfBirth}</ListGroup.Item>
+                            <ListGroup.Item>Treatment Status: {patientData.status ? 'Active' : 'Inactive'}</ListGroup.Item>
+                            <ListGroup.Item>Address: {patientData.address}</ListGroup.Item>
+                            <ListGroup.Item>Contact: {patientData.contact}</ListGroup.Item>
+                            <ListGroup.Item>E-Mail: {patientData.email}</ListGroup.Item>
+                            <ListGroup.Item>Guardian: {patientData.guardian}</ListGroup.Item>
+                        </ListGroup>
+                    </Card>
+                </Col>
+            </Row>
             <Container fluid>
-                <Row>
-                    <Col>
-                        <Stack gap={2}>
-                            <div className='p-2 rounded bg-secondary text-white'>Patient Name: {patientData.patientName}</div>
-                            <div className='p-2 rounded bg-secondary text-white'>Phone Number: {patientData.contact}</div>
-                            <div className='p-2 rounded bg-secondary text-white'>Gender: {patientData.gender}</div>
-                            <div className='p-2 rounded bg-secondary text-white'>Blood Group: {patientData.bloodGroup}</div>
-                            <div className='p-2 rounded bg-secondary text-white'>Nationality: {patientData.nationality}</div>
-                            <div className='p-2 rounded bg-secondary text-white'>Occupation: {patientData.occupation}</div>
-                            <div className='p-2 rounded bg-secondary text-white'>Marital Status: {patientData.matitalStatus}</div>
-                            
-                        </Stack>
-                    </Col>
-                    <Col>
-                        <Stack gap={2}>
-                            <div className='p-2 rounded bg-secondary text-white'>Date Of Birth: {patientData.dateOfBirth}</div>
-                            <div className='p-2 rounded bg-secondary text-white'>Treatment Status: {patientData.status ? 'Active' : 'Inactive'}</div>
-                            <div className='p-2 rounded bg-secondary text-white'>Address: {patientData.address}</div>
-                            <div className='p-2 rounded bg-secondary text-white'>Contact: {patientData.contact}</div>
-                            <div className='p-2 rounded bg-secondary text-white'>E-Mail: {patientData.email}</div>
-                            <div className='p-2 rounded bg-secondary text-white'>Guardian: {patientData.guardian}</div>
-                        </Stack>
-                    </Col>
-                </Row>
+                <br />
+                <hr />
                 <br />
                 <ExamData />
-                <br />
-                <Button variant='danger' onClick={()=>{navigate('/')}}>Go Back</Button>
             </Container>
+
         </div>
     );
 }

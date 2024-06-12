@@ -14,7 +14,7 @@ const ExamData = () => {
   const [diagnosisModalShow, setDiagnosisModalShow] = React.useState(false);
 
   return (
-    <div>
+    <div className='px-5'>
       <Accordion>
         <Accordion.Item eventKey="0">
           <Accordion.Header>Dental History</Accordion.Header>

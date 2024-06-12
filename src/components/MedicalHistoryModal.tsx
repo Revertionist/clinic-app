@@ -1,4 +1,3 @@
-import React from 'react'
 import { Modal, Form, FormSelect } from 'react-bootstrap'
 
 const MedicalHistoryModal = (props: any) => {
