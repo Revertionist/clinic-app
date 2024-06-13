@@ -1,7 +1,31 @@
 import React from 'react'
 import { Modal, Form } from 'react-bootstrap'
+import { doc, addDoc, collection } from 'firebase/firestore';
+import { firestore } from '../lib/firebase';
 
-const RadiologicalFindingsModal = (props: any) => {
+interface RadioplogicalFindingsModalProps {
+    show: boolean;
+    onHide: () => void;
+    patientId: string;
+}
+
+const RadiologicalFindingsModal: React.FC<RadioplogicalFindingsModalProps> = (props) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+
+        const radiologicalFindings = formData.get('radiological-findings') as string
+
+        try {
+            const patientRef = doc(firestore, 'patients', props.patientId);
+            const radiologicalCollectionRef = collection(patientRef, 'radiologicalFindings');
+            await addDoc(radiologicalCollectionRef, { radiologicalFindings });
+            alert('Radiological Findings added successfully');
+            props.onHide();
+        } catch (error) {
+            alert(error)
+        }
+    }
     return (
         <div>
             <Modal
@@ -16,7 +40,7 @@ const RadiologicalFindingsModal = (props: any) => {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form>
+                    <Form onSubmit={handleSubmit}>
                         <textarea name="radiological-findings" className='form-control' placeholder='Radiological Findings' /> <br />
                         <input className='btn btn-danger' type="submit" value="Save" />
                     </Form>

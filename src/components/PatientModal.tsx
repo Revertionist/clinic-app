@@ -30,7 +30,6 @@ const PatientModal: FC<PatientModalProps> = (props) => {
 
         try {
             await addDoc(collection(firestore, "patients"), person);
-            alert("Patient added successfully");
             props.onHide();
         } catch (error) {
             alert(error);

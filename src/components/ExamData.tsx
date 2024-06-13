@@ -6,7 +6,11 @@ import ClinicalExaminationModal from './ClinicalExaminationModal';
 import RadiologicalFindingsModal from './RadiologicalFindingsModal';
 import DiagnosisModal from './DiagnosisModal';
 
-const ExamData = () => {
+interface ExamDataProps {
+  patientId: string;
+}
+
+const ExamData: React.FC<ExamDataProps> = ({ patientId }) => {
   const [dentalModalShow, setDentalModalShow] = React.useState(false);
   const [medicalModalShow, setMedicalModalShow] = React.useState(false);
   const [clinicalModalShow, setClinicalModalShow] = React.useState(false);
@@ -23,6 +27,7 @@ const ExamData = () => {
             <DentalHistoryModal
               show={dentalModalShow}
               onHide={() => setDentalModalShow(false)}
+              patientId={patientId}
             />
           </Accordion.Body>
         </Accordion.Item>
@@ -36,6 +41,7 @@ const ExamData = () => {
             <MedicalHistoryModal
               show={medicalModalShow}
               onHide={() => setMedicalModalShow(false)}
+              patientId={patientId}
             />
           </Accordion.Body>
         </Accordion.Item>
@@ -49,6 +55,7 @@ const ExamData = () => {
             <ClinicalExaminationModal
               show={clinicalModalShow}
               onHide={() => setClinicalModalShow(false)}
+              patientId={patientId}
             />
           </Accordion.Body>
         </Accordion.Item>
@@ -62,6 +69,7 @@ const ExamData = () => {
             <RadiologicalFindingsModal
               show={radiologicalModalShow}
               onHide={() => setRadiologicalModalShow(false)}
+              patientId={patientId}
             />
           </Accordion.Body>
         </Accordion.Item>
@@ -75,6 +83,7 @@ const ExamData = () => {
             <DiagnosisModal
               show={diagnosisModalShow}
               onHide={() => setDiagnosisModalShow(false)}
+              patientId={patientId}
             />
           </Accordion.Body>
         </Accordion.Item>

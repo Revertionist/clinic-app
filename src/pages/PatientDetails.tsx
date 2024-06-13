@@ -48,7 +48,7 @@ const PatientDetails: React.FC = () => {
         <div>
             <Row>
                 <Col>
-                    <Card style={{ marginLeft: "150px", width: '40rem', backgroundColor: "black" }}>
+                    <Card style={{ marginLeft: "100px", width: '40rem', backgroundColor: "black" }}>
                         <ListGroup variant="flush">
                             <ListGroup.Item>Patient Name: {patientData.patientName}</ListGroup.Item>
                             <ListGroup.Item>Phone Number: {patientData.contact}</ListGroup.Item>
@@ -77,7 +77,9 @@ const PatientDetails: React.FC = () => {
                 <br />
                 <hr />
                 <br />
-                <ExamData />
+                <ExamData
+                    patientId={id}
+                />
             </Container>
 
         </div>
