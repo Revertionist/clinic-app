@@ -1,7 +1,7 @@
-import { FC } from 'react'
+import { FC } from 'react';
 import React from 'react';
-import { Modal, Form } from 'react-bootstrap'
-import { doc, addDoc, collection } from 'firebase/firestore';
+import { Modal, Form } from 'react-bootstrap';
+import { doc, updateDoc } from 'firebase/firestore';
 import { firestore } from '../lib/firebase';
 
 interface DiagnosisModalProps {
@@ -19,14 +19,16 @@ const DiagnosisModal: FC<DiagnosisModalProps> = (props) => {
 
     try {
       const patientRef = doc(firestore, 'patients', props.patientId);
-      const diagnosisCollectionRef = collection(patientRef, 'diagnosis');
-      await addDoc(diagnosisCollectionRef, { diagnosis });
+      await updateDoc(patientRef, {
+        'ExaminationData.Diagnosis': diagnosis
+      });
       alert('Diagnosis added successfully');
       props.onHide();
     } catch (error) {
       alert(error);
     }
   }
+
   return (
     <div>
       <Modal
@@ -48,7 +50,7 @@ const DiagnosisModal: FC<DiagnosisModalProps> = (props) => {
         </Modal.Body>
       </Modal>
     </div>
-  )
+  );
 }
 
-export default DiagnosisModal
+export default DiagnosisModal;

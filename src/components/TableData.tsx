@@ -1,6 +1,7 @@
 import React from "react";
 import { Table } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 interface User {
     id: string;
@@ -19,7 +20,6 @@ const TableData: React.FC<TableDataProps> = ({ dataValues }) => {
 
     const titleValues = ["Patient Name", "Phone Number", "Date Of Birth", "Treatment Status"];
     const headValues = ["patientName", "contact", "dateOfBirth"];
-
     return (
         <Table hover>
             <thead>

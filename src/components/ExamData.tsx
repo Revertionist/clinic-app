@@ -1,5 +1,5 @@
 import { Accordion, Button } from 'react-bootstrap'
-import React from 'react';
+import React, { useEffect } from 'react';
 import DentalHistoryModal from './DentalHistoryModal';
 import MedicalHistoryModal from './MedicalHistoryModal';
 import ClinicalExaminationModal from './ClinicalExaminationModal';
@@ -8,22 +8,24 @@ import DiagnosisModal from './DiagnosisModal';
 
 interface ExamDataProps {
   patientId: string;
+  ExaminationData: any;
 }
 
-const ExamData: React.FC<ExamDataProps> = ({ patientId }) => {
+const ExamData: React.FC<ExamDataProps> = ({ patientId, ExaminationData }) => {
   const [dentalModalShow, setDentalModalShow] = React.useState(false);
   const [medicalModalShow, setMedicalModalShow] = React.useState(false);
   const [clinicalModalShow, setClinicalModalShow] = React.useState(false);
   const [radiologicalModalShow, setRadiologicalModalShow] = React.useState(false);
   const [diagnosisModalShow, setDiagnosisModalShow] = React.useState(false);
 
+
   return (
     <div className='px-5'>
       <Accordion>
         <Accordion.Item eventKey="0">
           <Accordion.Header>Dental History</Accordion.Header>
-          <Accordion.Body>
-            <Button onClick={() => setDentalModalShow(true)}>Add Dental History</Button>
+          <Accordion.Body> <br /> 
+            <Button variant='outline-danger' onClick={() => setDentalModalShow(true)}>Add Dental History</Button>
             <DentalHistoryModal
               show={dentalModalShow}
               onHide={() => setDentalModalShow(false)}
@@ -37,7 +39,7 @@ const ExamData: React.FC<ExamDataProps> = ({ patientId }) => {
         <Accordion.Item eventKey="1">
           <Accordion.Header>Medical History</Accordion.Header>
           <Accordion.Body>
-            <Button onClick={() => setMedicalModalShow(true)}>Add Medical History</Button>
+            <Button variant='outline-danger' onClick={() => setMedicalModalShow(true)}>Add Medical History</Button>
             <MedicalHistoryModal
               show={medicalModalShow}
               onHide={() => setMedicalModalShow(false)}
@@ -51,7 +53,7 @@ const ExamData: React.FC<ExamDataProps> = ({ patientId }) => {
         <Accordion.Item eventKey="2">
           <Accordion.Header>Clinical Examination</Accordion.Header>
           <Accordion.Body>
-            <Button onClick={() => setClinicalModalShow(true)}>Add Clinical Examination</Button>
+            <Button variant='outline-danger' onClick={() => setClinicalModalShow(true)}>Add Clinical Examination</Button>
             <ClinicalExaminationModal
               show={clinicalModalShow}
               onHide={() => setClinicalModalShow(false)}
@@ -65,7 +67,7 @@ const ExamData: React.FC<ExamDataProps> = ({ patientId }) => {
         <Accordion.Item eventKey="3">
           <Accordion.Header>Radiological Findings</Accordion.Header>
           <Accordion.Body>
-            <Button onClick={() => setRadiologicalModalShow(true)}>Add Radiological Findings</Button>
+            <Button variant='outline-danger' onClick={() => setRadiologicalModalShow(true)}>Add Radiological Findings</Button>
             <RadiologicalFindingsModal
               show={radiologicalModalShow}
               onHide={() => setRadiologicalModalShow(false)}
@@ -79,7 +81,7 @@ const ExamData: React.FC<ExamDataProps> = ({ patientId }) => {
         <Accordion.Item eventKey="4">
           <Accordion.Header>Diagnosis</Accordion.Header>
           <Accordion.Body>
-            <Button onClick={() => setDiagnosisModalShow(true)}>Add Diagnosis</Button>
+            <Button variant='outline-danger' onClick={() => setDiagnosisModalShow(true)}>Add Diagnosis</Button>
             <DiagnosisModal
               show={diagnosisModalShow}
               onHide={() => setDiagnosisModalShow(false)}
@@ -93,7 +95,7 @@ const ExamData: React.FC<ExamDataProps> = ({ patientId }) => {
         <Accordion.Item eventKey="5">
           <Accordion.Header>Treatment Plan</Accordion.Header>
           <Accordion.Body>
-            <Button>Add Treatment Plan</Button>
+            <Button variant='outline-danger'>Add Treatment Plan</Button>
           </Accordion.Body>
         </Accordion.Item>
       </Accordion>

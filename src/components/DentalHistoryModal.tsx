@@ -1,7 +1,37 @@
 import React from 'react'
 import { Modal, Form } from 'react-bootstrap'
+import { firestore } from '../lib/firebase';
+import { doc, updateDoc } from 'firebase/firestore';
 
-const DentalHistoryModal = (props: any) => {
+interface DentalHistoryModalProps {
+    show: boolean;
+    onHide: () => void;
+    patientId: string;
+}
+
+const DentalHistoryModal: React.FC<DentalHistoryModalProps> = (props) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        const chiefComplaint = formData.get('chief-complaint') as string;
+        const illnessHistory = formData.get('illness-history') as string;
+        const dentalHistory = formData.get('dental-history') as string;
+
+        try {
+            const patientRef = doc(firestore, 'patients', props.patientId);
+            await updateDoc(patientRef, {
+                'ExaminationData.Dental History': {
+                    'Chief Complaint': chiefComplaint,
+                    'Illness History': illnessHistory,
+                    'Dental History': dentalHistory,
+                },
+            });
+            alert("Dental History added sucessfully");
+            props.onHide();
+        } catch (error) {
+            alert(error)
+        }
+    }
     return (
         <div>
             <Modal
@@ -16,10 +46,10 @@ const DentalHistoryModal = (props: any) => {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form>
-                        <input className='form-control' type='text' placeholder='Chief Complaint' value='chief-complaint' /> <br />
-                        <input className='form-control' type='text' placeholder='History of Present Illness' value='illness-history' /> <br />
-                        <input className='form-control' type='text' placeholder='Past Dental History' value='dental-history' /> <br />
+                    <Form onSubmit={handleSubmit}>
+                        <input className='form-control' type='text' placeholder='Chief Complaint' name='chief-complaint' /> <br />
+                        <input className='form-control' type='text' placeholder='History of Present Illness' name='illness-history' /> <br />
+                        <input className='form-control' type='text' placeholder='Past Dental History' name='dental-history' /> <br />
                         <input type='submit' className='btn btn-danger' value="Save" />
                     </Form>
                 </Modal.Body>

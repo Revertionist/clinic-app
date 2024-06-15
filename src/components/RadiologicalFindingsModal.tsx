@@ -1,6 +1,6 @@
 import React from 'react'
 import { Modal, Form } from 'react-bootstrap'
-import { doc, addDoc, collection } from 'firebase/firestore';
+import { doc, updateDoc, collection } from 'firebase/firestore';
 import { firestore } from '../lib/firebase';
 
 interface RadioplogicalFindingsModalProps {
@@ -14,15 +14,16 @@ const RadiologicalFindingsModal: React.FC<RadioplogicalFindingsModalProps> = (pr
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
 
-        const radiologicalFindings = formData.get('radiological-findings') as string
+        const radiologicalFindings = formData.get('radiological-findings') as string;
 
-        try {
-            const patientRef = doc(firestore, 'patients', props.patientId);
-            const radiologicalCollectionRef = collection(patientRef, 'radiologicalFindings');
-            await addDoc(radiologicalCollectionRef, { radiologicalFindings });
-            alert('Radiological Findings added successfully');
-            props.onHide();
-        } catch (error) {
+        try{
+            const patientRef = doc (firestore, 'patients', props.patientId);
+            await updateDoc (patientRef, {
+                'ExaminationData.Radiological Findings': radiologicalFindings,
+            });
+            alert("Radiological Findings added sucessfully")
+            props.onHide()
+        } catch(error){
             alert(error)
         }
     }

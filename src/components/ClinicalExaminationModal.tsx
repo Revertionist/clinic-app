@@ -1,7 +1,36 @@
 import React from 'react'
 import { Modal, Form } from 'react-bootstrap'
+import { firestore } from '../lib/firebase';
+import { doc, updateDoc } from 'firebase/firestore';
 
-const ClinicalExaminationModal = (props: any) => {
+interface ClinicalExaminationModalProps {
+    show: boolean;
+    onHide: () => void;
+    patientId: string;
+}
+
+const ClinicalExaminationModal: React.FC<ClinicalExaminationModalProps> = (props) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        const extraOralExam = formData.get('extra-oral-examination') as string;
+        const intraOralExam = formData.get('intra-oral-examination') as string;
+
+        try {
+            const patientRef = doc(firestore, 'patients', props.patientId);
+            await updateDoc(patientRef, {
+                'ExaminationData.Clinical Examination': {
+                    'Extra Oral Examination': extraOralExam,
+                    'Intra Oral Examination': intraOralExam,
+                },
+            });
+            alert("Clinical Examination added sucessfully")
+            props.onHide()
+
+        } catch (error) {
+            alert(error)
+        }
+    }
     return (
         <div>
             <Modal
@@ -16,7 +45,7 @@ const ClinicalExaminationModal = (props: any) => {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form>
+                    <Form onSubmit={handleSubmit}>
                         <textarea name="extra-oral-examination" className='form-control' placeholder='Extra Oral Examination' /> <br />
                         <textarea name="intra-oral-examination" className='form-control' placeholder='Intra Oral Examination' /> <br />
                         <input type="submit" className='btn btn-danger' value="Save" />

@@ -5,6 +5,7 @@ import { Row, Col, Container, Card, ListGroup } from 'react-bootstrap';
 import { firestore } from '../lib/firebase';
 import { doc, getDoc } from "firebase/firestore";
 import ExamData from '../components/ExamData';
+import LoadingSpinner from '../components/Spinner';
 
 interface PatientData {
     patientName: string;
@@ -19,6 +20,7 @@ interface PatientData {
     address: string;
     email: string;
     guardian: string;
+    ExaminationData: any
 }
 
 const PatientDetails: React.FC = () => {
@@ -41,45 +43,52 @@ const PatientDetails: React.FC = () => {
     }, [id]);
 
     if (!patientData) {
-        return <div>Loading...</div>;
+        return <LoadingSpinner/>;
     }
 
     return (
         <div>
-            <Row>
-                <Col>
-                    <Card style={{ marginLeft: "100px", width: '40rem', backgroundColor: "black" }}>
-                        <ListGroup variant="flush">
-                            <ListGroup.Item>Patient Name: {patientData.patientName}</ListGroup.Item>
-                            <ListGroup.Item>Phone Number: {patientData.contact}</ListGroup.Item>
-                            <ListGroup.Item>Gender: {patientData.gender}</ListGroup.Item>
-                            <ListGroup.Item>Blood Group: {patientData.bloodGroup}</ListGroup.Item>
-                            <ListGroup.Item>Nationality: {patientData.nationality}</ListGroup.Item>
-                            <ListGroup.Item>Occupation: {patientData.occupation}</ListGroup.Item>
-                            <ListGroup.Item>Marital Status: {patientData.maritalStatus}</ListGroup.Item>
-                        </ListGroup>
-                    </Card>
-                </Col>
-                <Col>
-                    <Card style={{ width: '40rem', backgroundColor: "black" }}>
-                        <ListGroup variant="flush">
-                            <ListGroup.Item>Date Of Birth: {patientData.dateOfBirth}</ListGroup.Item>
-                            <ListGroup.Item>Treatment Status: {patientData.status ? 'Active' : 'Inactive'}</ListGroup.Item>
-                            <ListGroup.Item>Address: {patientData.address}</ListGroup.Item>
-                            <ListGroup.Item>Contact: {patientData.contact}</ListGroup.Item>
-                            <ListGroup.Item>E-Mail: {patientData.email}</ListGroup.Item>
-                            <ListGroup.Item>Guardian: {patientData.guardian}</ListGroup.Item>
-                        </ListGroup>
-                    </Card>
-                </Col>
-            </Row>
-            <Container fluid>
-                <br />
-                <hr />
-                <br />
-                <ExamData
-                    patientId={id}
-                />
+            <Container style={{ alignItems: 'center' }}>
+                <h1>Patient Details</h1>
+                <hr /><br />
+                <Container fluid>
+                    <Row style={{ paddingLeft: "50px", paddingRight: "50px" }}>
+                        <Col>
+                            <Card style={{ backgroundColor: "black" }}>
+                                <ListGroup variant="flush">
+                                    <ListGroup.Item>Patient Name: {patientData.patientName}</ListGroup.Item>
+                                    <ListGroup.Item>Phone Number: {patientData.contact}</ListGroup.Item>
+                                    <ListGroup.Item>Gender: {patientData.gender}</ListGroup.Item>
+                                    <ListGroup.Item>Blood Group: {patientData.bloodGroup}</ListGroup.Item>
+                                    <ListGroup.Item>Nationality: {patientData.nationality}</ListGroup.Item>
+                                    <ListGroup.Item>Occupation: {patientData.occupation}</ListGroup.Item>
+                                    <ListGroup.Item>Marital Status: {patientData.maritalStatus}</ListGroup.Item>
+                                </ListGroup>
+                            </Card>
+                        </Col>
+                        <Col>
+                            <Card style={{ backgroundColor: "black" }}>
+                                <ListGroup variant="flush">
+                                    <ListGroup.Item>Date Of Birth: {patientData.dateOfBirth}</ListGroup.Item>
+                                    <ListGroup.Item>Treatment Status: {patientData.status ? 'Active' : 'Inactive'}</ListGroup.Item>
+                                    <ListGroup.Item>Address: {patientData.address}</ListGroup.Item>
+                                    <ListGroup.Item>Contact: {patientData.contact}</ListGroup.Item>
+                                    <ListGroup.Item>E-Mail: {patientData.email}</ListGroup.Item>
+                                    <ListGroup.Item>Guardian: {patientData.guardian}</ListGroup.Item>
+                                </ListGroup>
+                            </Card>
+                        </Col>
+                    </Row>
+                </Container>
+                <Container fluid>
+                    <br />
+                    <hr />
+                    <br />
+                    <ExamData
+                        patientId={id}
+                        ExaminationData={patientData.ExaminationData}
+                    />
+                </Container>
             </Container>
 
         </div>
