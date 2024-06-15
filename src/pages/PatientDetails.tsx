@@ -20,7 +20,7 @@ interface PatientData {
     address: string;
     email: string;
     guardian: string;
-    ExaminationData: any
+    ExaminationData: any;
 }
 
 const PatientDetails: React.FC = () => {

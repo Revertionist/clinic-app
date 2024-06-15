@@ -22,8 +22,8 @@ const DentalHistoryModal: React.FC<DentalHistoryModalProps> = (props) => {
             await updateDoc(patientRef, {
                 'ExaminationData.Dental History': {
                     'Chief Complaint': chiefComplaint,
-                    'Illness History': illnessHistory,
-                    'Dental History': dentalHistory,
+                    'History Of Present Illness': illnessHistory,
+                    'Past Dental History': dentalHistory,
                 },
             });
             alert("Dental History added sucessfully");

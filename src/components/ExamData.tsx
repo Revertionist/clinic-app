@@ -5,6 +5,7 @@ import MedicalHistoryModal from './MedicalHistoryModal';
 import ClinicalExaminationModal from './ClinicalExaminationModal';
 import RadiologicalFindingsModal from './RadiologicalFindingsModal';
 import DiagnosisModal from './DiagnosisModal';
+import ExaminationDetailsCard from './ExaminationDetailsCard';
 
 interface ExamDataProps {
   patientId: string;
@@ -24,7 +25,11 @@ const ExamData: React.FC<ExamDataProps> = ({ patientId, ExaminationData }) => {
       <Accordion>
         <Accordion.Item eventKey="0">
           <Accordion.Header>Dental History</Accordion.Header>
-          <Accordion.Body> <br /> 
+          <Accordion.Body>
+            <ExaminationDetailsCard
+              ExaminationData={ExaminationData}
+              examinationType="Dental History"
+            /> <br />
             <Button variant='outline-danger' onClick={() => setDentalModalShow(true)}>Add Dental History</Button>
             <DentalHistoryModal
               show={dentalModalShow}
@@ -39,6 +44,10 @@ const ExamData: React.FC<ExamDataProps> = ({ patientId, ExaminationData }) => {
         <Accordion.Item eventKey="1">
           <Accordion.Header>Medical History</Accordion.Header>
           <Accordion.Body>
+            <ExaminationDetailsCard
+              ExaminationData={ExaminationData}
+              examinationType="Medical History"
+            /> <br />
             <Button variant='outline-danger' onClick={() => setMedicalModalShow(true)}>Add Medical History</Button>
             <MedicalHistoryModal
               show={medicalModalShow}
@@ -53,6 +62,10 @@ const ExamData: React.FC<ExamDataProps> = ({ patientId, ExaminationData }) => {
         <Accordion.Item eventKey="2">
           <Accordion.Header>Clinical Examination</Accordion.Header>
           <Accordion.Body>
+            <ExaminationDetailsCard
+              ExaminationData={ExaminationData}
+              examinationType="Clinical Examination"
+            /> <br />
             <Button variant='outline-danger' onClick={() => setClinicalModalShow(true)}>Add Clinical Examination</Button>
             <ClinicalExaminationModal
               show={clinicalModalShow}
@@ -67,6 +80,10 @@ const ExamData: React.FC<ExamDataProps> = ({ patientId, ExaminationData }) => {
         <Accordion.Item eventKey="3">
           <Accordion.Header>Radiological Findings</Accordion.Header>
           <Accordion.Body>
+            <ExaminationDetailsCard
+              ExaminationData={ExaminationData}
+              examinationType="Radiological Findings"
+            /> <br />
             <Button variant='outline-danger' onClick={() => setRadiologicalModalShow(true)}>Add Radiological Findings</Button>
             <RadiologicalFindingsModal
               show={radiologicalModalShow}
@@ -81,6 +98,10 @@ const ExamData: React.FC<ExamDataProps> = ({ patientId, ExaminationData }) => {
         <Accordion.Item eventKey="4">
           <Accordion.Header>Diagnosis</Accordion.Header>
           <Accordion.Body>
+            <ExaminationDetailsCard
+              ExaminationData={ExaminationData}
+              examinationType="Diagnosis"
+            /> <br />
             <Button variant='outline-danger' onClick={() => setDiagnosisModalShow(true)}>Add Diagnosis</Button>
             <DiagnosisModal
               show={diagnosisModalShow}
