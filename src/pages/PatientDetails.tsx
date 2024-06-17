@@ -85,7 +85,7 @@ const PatientDetails: React.FC = () => {
                     <hr />
                     <br />
                     <ExamData
-                        patientId={id}
+                        patientid={id}
                         ExaminationData={patientData.ExaminationData}
                     />
                 </Container>

@@ -6,7 +6,7 @@ import { doc, updateDoc } from 'firebase/firestore';
 interface MedicalHistoryModalProps {
     show: boolean;
     onHide: () => void;
-    patientId: string;
+    patientid: string;
 }
 
 const MedicalHistoryModal: React.FC<MedicalHistoryModalProps> = (props) => {
@@ -24,7 +24,7 @@ const MedicalHistoryModal: React.FC<MedicalHistoryModalProps> = (props) => {
         const allergies = formData.get('allergies') as string
 
         try {
-            const patientRef = doc(firestore, 'patients', props.patientId);
+            const patientRef = doc(firestore, 'patients', props.patientid);
             await updateDoc(patientRef, {
                 'ExaminationData.Medical History': {
                     'Cardiovascular': cardiovascular,

@@ -7,7 +7,7 @@ import { firestore } from '../lib/firebase';
 interface DiagnosisModalProps {
   show: boolean;
   onHide: () => void;
-  patientId: string;
+  patientid: string;
 }
 
 const DiagnosisModal: FC<DiagnosisModalProps> = (props) => {
@@ -18,7 +18,7 @@ const DiagnosisModal: FC<DiagnosisModalProps> = (props) => {
     const diagnosis = formData.get('diagnosis') as string;
 
     try {
-      const patientRef = doc(firestore, 'patients', props.patientId);
+      const patientRef = doc(firestore, 'patients', props.patientid);
       await updateDoc(patientRef, {
         'ExaminationData.Diagnosis': diagnosis
       });

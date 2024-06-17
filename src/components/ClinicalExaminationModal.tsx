@@ -6,7 +6,7 @@ import { doc, updateDoc } from 'firebase/firestore';
 interface ClinicalExaminationModalProps {
     show: boolean;
     onHide: () => void;
-    patientId: string;
+    patientid: string;
 }
 
 const ClinicalExaminationModal: React.FC<ClinicalExaminationModalProps> = (props) => {
@@ -17,7 +17,7 @@ const ClinicalExaminationModal: React.FC<ClinicalExaminationModalProps> = (props
         const intraOralExam = formData.get('intra-oral-examination') as string;
 
         try {
-            const patientRef = doc(firestore, 'patients', props.patientId);
+            const patientRef = doc(firestore, 'patients', props.patientid);
             await updateDoc(patientRef, {
                 'ExaminationData.Clinical Examination': {
                     'Extra Oral Examination': extraOralExam,

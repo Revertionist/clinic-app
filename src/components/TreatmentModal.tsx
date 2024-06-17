@@ -1,23 +1,23 @@
-import React from 'react';
-import { Modal, Form, Button } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Modal, Form } from 'react-bootstrap';
 import { firestore } from '../lib/firebase';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 
 interface TreatmentModalProps {
     show: boolean;
     onHide: () => void;
-    patientId: string;
+    patientid: string;
 }
 
 const TreatmentModal: React.FC<TreatmentModalProps> = (props) => {
+    const [planDetails, setPlanDetails] = useState('');
+    const [status, setStatus] = useState(false);
+
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const formData = new FormData(event.currentTarget);
-        const planDetails = formData.get('treatment-plan-details') as string;
-        const status = formData.get('status') ? true : false;
 
         try {
-            const patientRef = doc(firestore, 'patients', props.patientId);
+            const patientRef = doc(firestore, 'patients', props.patientid);
             const snap = await getDoc(patientRef);
             const data = snap.data();
             const TreatmentPlan = data?.TreatmentPlan || [];
@@ -52,10 +52,22 @@ const TreatmentModal: React.FC<TreatmentModalProps> = (props) => {
             </Modal.Header>
             <Modal.Body>
                 <Form onSubmit={handleSubmit}>
-                    {/* <input type='text' className='form-control' placeholder='Plan Details' name='treatment-plan-details' /> <br /> */}
-                    <textarea name="treatment-plan-details" placeholder='Plan Details' className='form-control' /> <br />
+                    <textarea
+                        name="treatment-plan-details"
+                        placeholder='Plan Details'
+                        className='form-control'
+                        value={planDetails}
+                        onChange={(e) => setPlanDetails(e.target.value)}
+                    />
+                    <br />
                     <label className='px-2'>Status</label>
-                    <input type="checkbox" name="status" /> <br /> <br />
+                    <input
+                        type="checkbox"
+                        name="status"
+                        checked={status}
+                        onChange={(e) => setStatus(e.target.checked)}
+                    />
+                    <br /> <br />
                     <input type="submit" className='btn btn-danger' value='Add' />
                 </Form>
             </Modal.Body>

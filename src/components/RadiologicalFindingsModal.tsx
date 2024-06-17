@@ -1,12 +1,12 @@
 import React from 'react'
 import { Modal, Form } from 'react-bootstrap'
-import { doc, updateDoc, collection } from 'firebase/firestore';
+import { doc, updateDoc } from 'firebase/firestore';
 import { firestore } from '../lib/firebase';
 
 interface RadioplogicalFindingsModalProps {
     show: boolean;
     onHide: () => void;
-    patientId: string;
+    patientid: string;
 }
 
 const RadiologicalFindingsModal: React.FC<RadioplogicalFindingsModalProps> = (props) => {
@@ -17,7 +17,7 @@ const RadiologicalFindingsModal: React.FC<RadioplogicalFindingsModalProps> = (pr
         const radiologicalFindings = formData.get('radiological-findings') as string;
 
         try{
-            const patientRef = doc (firestore, 'patients', props.patientId);
+            const patientRef = doc (firestore, 'patients', props.patientid);
             await updateDoc (patientRef, {
                 'ExaminationData.Radiological Findings': radiologicalFindings,
             });

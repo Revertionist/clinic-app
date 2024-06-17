@@ -1,5 +1,5 @@
-import { Accordion, Button } from 'react-bootstrap'
 import React, { useEffect } from 'react';
+import { Accordion, Button } from 'react-bootstrap';
 import DentalHistoryModal from './DentalHistoryModal';
 import MedicalHistoryModal from './MedicalHistoryModal';
 import ClinicalExaminationModal from './ClinicalExaminationModal';
@@ -8,34 +8,36 @@ import DiagnosisModal from './DiagnosisModal';
 import ExaminationDetailsCard from './ExaminationDetailsCard';
 import TreatmentModal from './TreatmentModal';
 import TreatmentPlanTable from './TreatmentPlanTable';
+import TreatmentNoteModal from './TreatmentNoteModal';
 import { firestore } from '../lib/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 
 interface ExamDataProps {
-  patientId: string;
+  patientid: string;
   ExaminationData: any;
 }
 
-const ExamData: React.FC<ExamDataProps> = ({ patientId, ExaminationData }) => {
+const ExamData: React.FC<ExamDataProps> = ({ patientid, ExaminationData }) => {
   const [dentalModalShow, setDentalModalShow] = React.useState(false);
   const [medicalModalShow, setMedicalModalShow] = React.useState(false);
   const [clinicalModalShow, setClinicalModalShow] = React.useState(false);
   const [radiologicalModalShow, setRadiologicalModalShow] = React.useState(false);
   const [diagnosisModalShow, setDiagnosisModalShow] = React.useState(false);
   const [treatmentModalShow, setTreatmentModalShow] = React.useState(false);
-  const [treatmentPlan, setTreatmentPlan] = React.useState([])
+  const [treatmentPlan, setTreatmentPlan] = React.useState([]);
+  const [treatmentNoteModalShow, setTreatmentNoteModalShow] = React.useState(false);
 
   useEffect(() => {
     const getTreatmentPlan = async () => {
-      const patientRef = doc(firestore, 'patients', patientId)
+      const patientRef = doc(firestore, 'patients', patientid);
       const snap = await getDoc(patientRef);
       const data = snap.data();
       const TreatmentPlan = data?.TreatmentPlan || [];
-      console.log(TreatmentPlan)
-      return setTreatmentPlan(TreatmentPlan)
-    }
-    getTreatmentPlan()
-  }, [])
+      console.log(TreatmentPlan);
+      return setTreatmentPlan(TreatmentPlan);
+    };
+    getTreatmentPlan();
+  }, [patientid]);
 
   return (
     <div className='px-5'>
@@ -51,7 +53,7 @@ const ExamData: React.FC<ExamDataProps> = ({ patientId, ExaminationData }) => {
             <DentalHistoryModal
               show={dentalModalShow}
               onHide={() => setDentalModalShow(false)}
-              patientId={patientId}
+              patientid={patientid}
             />
           </Accordion.Body>
         </Accordion.Item>
@@ -69,7 +71,7 @@ const ExamData: React.FC<ExamDataProps> = ({ patientId, ExaminationData }) => {
             <MedicalHistoryModal
               show={medicalModalShow}
               onHide={() => setMedicalModalShow(false)}
-              patientId={patientId}
+              patientid={patientid}
             />
           </Accordion.Body>
         </Accordion.Item>
@@ -87,7 +89,7 @@ const ExamData: React.FC<ExamDataProps> = ({ patientId, ExaminationData }) => {
             <ClinicalExaminationModal
               show={clinicalModalShow}
               onHide={() => setClinicalModalShow(false)}
-              patientId={patientId}
+              patientid={patientid}
             />
           </Accordion.Body>
         </Accordion.Item>
@@ -105,7 +107,7 @@ const ExamData: React.FC<ExamDataProps> = ({ patientId, ExaminationData }) => {
             <RadiologicalFindingsModal
               show={radiologicalModalShow}
               onHide={() => setRadiologicalModalShow(false)}
-              patientId={patientId}
+              patientid={patientid}
             />
           </Accordion.Body>
         </Accordion.Item>
@@ -123,7 +125,7 @@ const ExamData: React.FC<ExamDataProps> = ({ patientId, ExaminationData }) => {
             <DiagnosisModal
               show={diagnosisModalShow}
               onHide={() => setDiagnosisModalShow(false)}
-              patientId={patientId}
+              patientid={patientid}
             />
           </Accordion.Body>
         </Accordion.Item>
@@ -135,19 +137,33 @@ const ExamData: React.FC<ExamDataProps> = ({ patientId, ExaminationData }) => {
           <Accordion.Body>
             <TreatmentPlanTable
               treatmentPlan={treatmentPlan}
-              patientId = {patientId}
+              patientid={patientid}
             />
             <Button variant='outline-danger' onClick={() => setTreatmentModalShow(true)}>Add Treatment Plan</Button>
             <TreatmentModal
               show={treatmentModalShow}
               onHide={() => setTreatmentModalShow(false)}
-              patientId={patientId}
+              patientid={patientid}
+            />
+          </Accordion.Body>
+        </Accordion.Item>
+      </Accordion>
+
+      <Accordion>
+        <Accordion.Item eventKey="5">
+          <Accordion.Header>Treatment Note</Accordion.Header>
+          <Accordion.Body>
+            <Button variant='outline-danger' onClick={() => setTreatmentNoteModalShow(true)}>Add Treatment Note</Button>
+            <TreatmentNoteModal
+              show={treatmentNoteModalShow}
+              onHide={() => setTreatmentNoteModalShow(false)}
+              patientid={patientid}
             />
           </Accordion.Body>
         </Accordion.Item>
       </Accordion>
     </div>
-  )
-}
+  );
+};
 
-export default ExamData
+export default ExamData;
