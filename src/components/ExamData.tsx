@@ -6,6 +6,10 @@ import ClinicalExaminationModal from './ClinicalExaminationModal';
 import RadiologicalFindingsModal from './RadiologicalFindingsModal';
 import DiagnosisModal from './DiagnosisModal';
 import ExaminationDetailsCard from './ExaminationDetailsCard';
+import TreatmentModal from './TreatmentModal';
+import TreatmentPlanTable from './TreatmentPlanTable';
+import { firestore } from '../lib/firebase';
+import { doc, getDoc } from 'firebase/firestore';
 
 interface ExamDataProps {
   patientId: string;
@@ -18,7 +22,20 @@ const ExamData: React.FC<ExamDataProps> = ({ patientId, ExaminationData }) => {
   const [clinicalModalShow, setClinicalModalShow] = React.useState(false);
   const [radiologicalModalShow, setRadiologicalModalShow] = React.useState(false);
   const [diagnosisModalShow, setDiagnosisModalShow] = React.useState(false);
+  const [treatmentModalShow, setTreatmentModalShow] = React.useState(false);
+  const [treatmentPlan, setTreatmentPlan] = React.useState([])
 
+  useEffect(() => {
+    const getTreatmentPlan = async () => {
+      const patientRef = doc(firestore, 'patients', patientId)
+      const snap = await getDoc(patientRef);
+      const data = snap.data();
+      const TreatmentPlan = data?.TreatmentPlan || [];
+      console.log(TreatmentPlan)
+      return setTreatmentPlan(TreatmentPlan)
+    }
+    getTreatmentPlan()
+  }, [])
 
   return (
     <div className='px-5'>
@@ -116,7 +133,16 @@ const ExamData: React.FC<ExamDataProps> = ({ patientId, ExaminationData }) => {
         <Accordion.Item eventKey="5">
           <Accordion.Header>Treatment Plan</Accordion.Header>
           <Accordion.Body>
-            <Button variant='outline-danger'>Add Treatment Plan</Button>
+            <TreatmentPlanTable
+              treatmentPlan={treatmentPlan}
+              patientId = {patientId}
+            />
+            <Button variant='outline-danger' onClick={() => setTreatmentModalShow(true)}>Add Treatment Plan</Button>
+            <TreatmentModal
+              show={treatmentModalShow}
+              onHide={() => setTreatmentModalShow(false)}
+              patientId={patientId}
+            />
           </Accordion.Body>
         </Accordion.Item>
       </Accordion>

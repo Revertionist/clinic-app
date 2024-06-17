@@ -1,7 +1,8 @@
 import React from "react";
 import { Table } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { doc, updateDoc } from "firebase/firestore";
+import { firestore } from "../lib/firebase";
 
 interface User {
     id: string;
@@ -17,6 +18,19 @@ interface TableDataProps {
 
 const TableData: React.FC<TableDataProps> = ({ dataValues }) => {
     const navigate = useNavigate();
+
+    const handleCheckboxClick = async (userId: string, currentStatus: boolean) => {
+        const newStatus = !currentStatus;
+
+        try {
+            const patientRef = doc(firestore, 'patients', userId);
+            await updateDoc(patientRef, {
+                status: newStatus
+            });
+        } catch (error) {
+            alert(error);
+        }
+    }
 
     const titleValues = ["Patient Name", "Phone Number", "Date Of Birth", "Treatment Status"];
     const headValues = ["patientName", "contact", "dateOfBirth"];
@@ -36,7 +50,7 @@ const TableData: React.FC<TableDataProps> = ({ dataValues }) => {
                             <td onClick={() => navigate(`/${user.id}`)} key={index}>{user[attribute as keyof User]}</td>
                         ))}
                         <td>
-                            <input type="checkbox" checked={user.status} readOnly />
+                            <input type="checkbox" checked={user.status} onChange={() => handleCheckboxClick(user.id, user.status)} />
                         </td>
                     </tr>
                 ))}

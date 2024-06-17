@@ -14,7 +14,7 @@ const ExaminationDetailsCard: React.FC<ExaminationDetailsCardProps> = (props) =>
 
     return (
         <div>
-            <Card className="text-center">
+            <Card border='info' className="text-center">
                 <Card.Header>{examinationType}</Card.Header>
                 <Card.Body>
                     {typeof relevantData === 'object' && relevantData !== null ? (

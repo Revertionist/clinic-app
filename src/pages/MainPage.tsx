@@ -18,7 +18,6 @@ function MainPage() {
             console.log(resp)
             return setPatients(resp)
         }
-
         getPatients()
     }, [])
 
