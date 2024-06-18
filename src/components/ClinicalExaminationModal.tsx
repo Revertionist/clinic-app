@@ -7,6 +7,7 @@ interface ClinicalExaminationModalProps {
     show: boolean;
     onHide: () => void;
     patientid: string;
+    onDataUpdate: () => {}
 }
 
 const ClinicalExaminationModal: React.FC<ClinicalExaminationModalProps> = (props) => {
@@ -24,7 +25,7 @@ const ClinicalExaminationModal: React.FC<ClinicalExaminationModalProps> = (props
                     'Intra Oral Examination': intraOralExam,
                 },
             });
-            alert("Clinical Examination added sucessfully")
+            props.onDataUpdate()
             props.onHide()
 
         } catch (error) {

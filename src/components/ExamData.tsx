@@ -17,7 +17,7 @@ interface ExamDataProps {
   ExaminationData: any;
 }
 
-const ExamData: React.FC<ExamDataProps> = ({ patientid, ExaminationData }) => {
+const ExamData: React.FC<ExamDataProps> = ({ patientid }) => {
   const [dentalModalShow, setDentalModalShow] = React.useState(false);
   const [medicalModalShow, setMedicalModalShow] = React.useState(false);
   const [clinicalModalShow, setClinicalModalShow] = React.useState(false);
@@ -26,18 +26,32 @@ const ExamData: React.FC<ExamDataProps> = ({ patientid, ExaminationData }) => {
   const [treatmentModalShow, setTreatmentModalShow] = React.useState(false);
   const [treatmentPlan, setTreatmentPlan] = React.useState([]);
   const [treatmentNoteModalShow, setTreatmentNoteModalShow] = React.useState(false);
+  const [forceRerender, setForceRerender] = React.useState(false);
+  const [examinationDetails, setExaminationDetails] = React.useState({})
 
   useEffect(() => {
     const getTreatmentPlan = async () => {
       const patientRef = doc(firestore, 'patients', patientid);
       const snap = await getDoc(patientRef);
       const data = snap.data();
-      const TreatmentPlan = data?.TreatmentPlan || [];
-      console.log(TreatmentPlan);
-      return setTreatmentPlan(TreatmentPlan);
+      setTreatmentPlan(data?.TreatmentPlan || []);
+
+      setExaminationDetails(data?.ExaminationData || {});
+
+      console.log(treatmentPlan);
     };
     getTreatmentPlan();
-  }, [patientid]);
+  }, [patientid, forceRerender]);
+
+  const refreshPlan = async () => {
+    const patientRef = doc(firestore, 'patients', patientid);
+    const snap = await getDoc(patientRef);
+    const data = snap.data();
+    console.log(data)
+    setTreatmentPlan(data?.TreatmentPlan || []);
+    setExaminationDetails(data?.ExaminationData || {});
+    setForceRerender(prev => !prev);
+  };
 
   return (
     <div className='px-5'>
@@ -46,7 +60,7 @@ const ExamData: React.FC<ExamDataProps> = ({ patientid, ExaminationData }) => {
           <Accordion.Header>Dental History</Accordion.Header>
           <Accordion.Body>
             <ExaminationDetailsCard
-              ExaminationData={ExaminationData}
+              ExaminationData={examinationDetails}
               examinationType="Dental History"
             /> <br />
             <Button variant='outline-danger' onClick={() => setDentalModalShow(true)}>Add Dental History</Button>
@@ -54,6 +68,7 @@ const ExamData: React.FC<ExamDataProps> = ({ patientid, ExaminationData }) => {
               show={dentalModalShow}
               onHide={() => setDentalModalShow(false)}
               patientid={patientid}
+              onDataUpdate={refreshPlan}
             />
           </Accordion.Body>
         </Accordion.Item>
@@ -64,7 +79,7 @@ const ExamData: React.FC<ExamDataProps> = ({ patientid, ExaminationData }) => {
           <Accordion.Header>Medical History</Accordion.Header>
           <Accordion.Body>
             <ExaminationDetailsCard
-              ExaminationData={ExaminationData}
+              ExaminationData={examinationDetails}
               examinationType="Medical History"
             /> <br />
             <Button variant='outline-danger' onClick={() => setMedicalModalShow(true)}>Add Medical History</Button>
@@ -72,6 +87,7 @@ const ExamData: React.FC<ExamDataProps> = ({ patientid, ExaminationData }) => {
               show={medicalModalShow}
               onHide={() => setMedicalModalShow(false)}
               patientid={patientid}
+              onDataUpdate={refreshPlan}
             />
           </Accordion.Body>
         </Accordion.Item>
@@ -82,7 +98,7 @@ const ExamData: React.FC<ExamDataProps> = ({ patientid, ExaminationData }) => {
           <Accordion.Header>Clinical Examination</Accordion.Header>
           <Accordion.Body>
             <ExaminationDetailsCard
-              ExaminationData={ExaminationData}
+              ExaminationData={examinationDetails}
               examinationType="Clinical Examination"
             /> <br />
             <Button variant='outline-danger' onClick={() => setClinicalModalShow(true)}>Add Clinical Examination</Button>
@@ -90,6 +106,7 @@ const ExamData: React.FC<ExamDataProps> = ({ patientid, ExaminationData }) => {
               show={clinicalModalShow}
               onHide={() => setClinicalModalShow(false)}
               patientid={patientid}
+              onDataUpdate={refreshPlan}
             />
           </Accordion.Body>
         </Accordion.Item>
@@ -100,7 +117,7 @@ const ExamData: React.FC<ExamDataProps> = ({ patientid, ExaminationData }) => {
           <Accordion.Header>Radiological Findings</Accordion.Header>
           <Accordion.Body>
             <ExaminationDetailsCard
-              ExaminationData={ExaminationData}
+              ExaminationData={examinationDetails}
               examinationType="Radiological Findings"
             /> <br />
             <Button variant='outline-danger' onClick={() => setRadiologicalModalShow(true)}>Add Radiological Findings</Button>
@@ -108,6 +125,7 @@ const ExamData: React.FC<ExamDataProps> = ({ patientid, ExaminationData }) => {
               show={radiologicalModalShow}
               onHide={() => setRadiologicalModalShow(false)}
               patientid={patientid}
+              onDataUpdate={refreshPlan}
             />
           </Accordion.Body>
         </Accordion.Item>
@@ -118,7 +136,7 @@ const ExamData: React.FC<ExamDataProps> = ({ patientid, ExaminationData }) => {
           <Accordion.Header>Diagnosis</Accordion.Header>
           <Accordion.Body>
             <ExaminationDetailsCard
-              ExaminationData={ExaminationData}
+              ExaminationData={examinationDetails}
               examinationType="Diagnosis"
             /> <br />
             <Button variant='outline-danger' onClick={() => setDiagnosisModalShow(true)}>Add Diagnosis</Button>
@@ -126,6 +144,7 @@ const ExamData: React.FC<ExamDataProps> = ({ patientid, ExaminationData }) => {
               show={diagnosisModalShow}
               onHide={() => setDiagnosisModalShow(false)}
               patientid={patientid}
+              onDataUpdate={refreshPlan}
             />
           </Accordion.Body>
         </Accordion.Item>
@@ -144,6 +163,7 @@ const ExamData: React.FC<ExamDataProps> = ({ patientid, ExaminationData }) => {
               show={treatmentModalShow}
               onHide={() => setTreatmentModalShow(false)}
               patientid={patientid}
+              onDataUpdate={refreshPlan}
             />
           </Accordion.Body>
         </Accordion.Item>
@@ -158,6 +178,7 @@ const ExamData: React.FC<ExamDataProps> = ({ patientid, ExaminationData }) => {
               show={treatmentNoteModalShow}
               onHide={() => setTreatmentNoteModalShow(false)}
               patientid={patientid}
+              onDataUpdate={refreshPlan}
             />
           </Accordion.Body>
         </Accordion.Item>

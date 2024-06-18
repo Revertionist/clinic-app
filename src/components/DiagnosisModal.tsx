@@ -8,6 +8,7 @@ interface DiagnosisModalProps {
   show: boolean;
   onHide: () => void;
   patientid: string;
+  onDataUpdate: () => {}
 }
 
 const DiagnosisModal: FC<DiagnosisModalProps> = (props) => {
@@ -22,7 +23,7 @@ const DiagnosisModal: FC<DiagnosisModalProps> = (props) => {
       await updateDoc(patientRef, {
         'ExaminationData.Diagnosis': diagnosis
       });
-      alert('Diagnosis added successfully');
+      props.onDataUpdate();
       props.onHide();
     } catch (error) {
       alert(error);

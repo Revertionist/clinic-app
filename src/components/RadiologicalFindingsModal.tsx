@@ -7,6 +7,7 @@ interface RadioplogicalFindingsModalProps {
     show: boolean;
     onHide: () => void;
     patientid: string;
+    onDataUpdate: () => {}
 }
 
 const RadiologicalFindingsModal: React.FC<RadioplogicalFindingsModalProps> = (props) => {
@@ -16,14 +17,14 @@ const RadiologicalFindingsModal: React.FC<RadioplogicalFindingsModalProps> = (pr
 
         const radiologicalFindings = formData.get('radiological-findings') as string;
 
-        try{
-            const patientRef = doc (firestore, 'patients', props.patientid);
-            await updateDoc (patientRef, {
+        try {
+            const patientRef = doc(firestore, 'patients', props.patientid);
+            await updateDoc(patientRef, {
                 'ExaminationData.Radiological Findings': radiologicalFindings,
             });
-            alert("Radiological Findings added sucessfully")
+            props.onDataUpdate();
             props.onHide()
-        } catch(error){
+        } catch (error) {
             alert(error)
         }
     }

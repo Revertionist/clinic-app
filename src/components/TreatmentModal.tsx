@@ -7,6 +7,7 @@ interface TreatmentModalProps {
     show: boolean;
     onHide: () => void;
     patientid: string;
+    onDataUpdate: () => {}
 }
 
 const TreatmentModal: React.FC<TreatmentModalProps> = (props) => {
@@ -31,7 +32,7 @@ const TreatmentModal: React.FC<TreatmentModalProps> = (props) => {
                 ...data,
                 TreatmentPlan
             });
-
+            props.onDataUpdate();
             props.onHide();
         } catch (error) {
             alert(error);

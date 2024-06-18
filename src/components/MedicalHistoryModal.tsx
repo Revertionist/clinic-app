@@ -7,6 +7,7 @@ interface MedicalHistoryModalProps {
     show: boolean;
     onHide: () => void;
     patientid: string;
+    onDataUpdate: () => {}
 }
 
 const MedicalHistoryModal: React.FC<MedicalHistoryModalProps> = (props) => {
@@ -38,7 +39,7 @@ const MedicalHistoryModal: React.FC<MedicalHistoryModalProps> = (props) => {
                     'Allergic To': allergies,
                 }
             });
-            alert("Medical History added sucessfully");
+            props.onDataUpdate();
             props.onHide();
         } catch (error) {
             alert(error)
