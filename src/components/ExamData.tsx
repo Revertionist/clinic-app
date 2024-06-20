@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Accordion, Button } from 'react-bootstrap';
+import { Accordion, Button, CardFooter } from 'react-bootstrap';
 import DentalHistoryModal from './DentalHistoryModal';
 import MedicalHistoryModal from './MedicalHistoryModal';
 import ClinicalExaminationModal from './ClinicalExaminationModal';
@@ -11,6 +11,7 @@ import TreatmentPlanTable from './TreatmentPlanTable';
 import TreatmentNoteModal from './TreatmentNoteModal';
 import { firestore } from '../lib/firebase';
 import { doc, getDoc } from 'firebase/firestore';
+import { useNavigate } from 'react-router-dom';
 
 interface ExamDataProps {
   patientid: string;
@@ -28,6 +29,7 @@ const ExamData: React.FC<ExamDataProps> = ({ patientid }) => {
   const [treatmentNoteModalShow, setTreatmentNoteModalShow] = React.useState(false);
   const [forceRerender, setForceRerender] = React.useState(false);
   const [examinationDetails, setExaminationDetails] = React.useState({})
+  const navigate = useNavigate()
 
   useEffect(() => {
     const getTreatmentPlan = async () => {
@@ -37,8 +39,6 @@ const ExamData: React.FC<ExamDataProps> = ({ patientid }) => {
       setTreatmentPlan(data?.TreatmentPlan || []);
 
       setExaminationDetails(data?.ExaminationData || {});
-
-      console.log(treatmentPlan);
     };
     getTreatmentPlan();
   }, [patientid, forceRerender]);
@@ -180,7 +180,8 @@ const ExamData: React.FC<ExamDataProps> = ({ patientid }) => {
               onHide={() => setTreatmentNoteModalShow(false)}
               patientid={patientid}
               onDataUpdate={refreshPlan}
-            />
+            /> <br />
+            <Button variant='outline-danger' onClick={() => { navigate(`/${patientid}/treatment_note`) }}>View Treatment Note</Button>
           </Accordion.Body>
         </Accordion.Item>
       </Accordion>

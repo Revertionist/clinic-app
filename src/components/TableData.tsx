@@ -18,7 +18,7 @@ interface TableDataProps {
 }
 
 const TableData: React.FC<TableDataProps> = ({ dataValues }) => {
-    const [users, setUsers] = useState(dataValues);
+    const [, setUsers] = useState(dataValues);
     const navigate = useNavigate();
 
     const handleCheckboxClick = async (userId: string, currentStatus: boolean) => {
