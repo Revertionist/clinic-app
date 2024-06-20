@@ -157,6 +157,7 @@ const ExamData: React.FC<ExamDataProps> = ({ patientid }) => {
             <TreatmentPlanTable
               treatmentPlan={treatmentPlan}
               patientid={patientid}
+              onDataUpdate={refreshPlan}
             />
             <Button variant='outline-danger' onClick={() => setTreatmentModalShow(true)}>Add Treatment Plan</Button>
             <TreatmentModal

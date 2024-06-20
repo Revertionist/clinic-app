@@ -9,9 +9,10 @@ interface TreatmentPlanTableProps {
         "Status": boolean;
     }>;
     patientid: string;
+    onDataUpdate: () => void
 }
 
-const TreatmentPlanTable: React.FC<TreatmentPlanTableProps> = ({ treatmentPlan, patientid }) => {
+const TreatmentPlanTable: React.FC<TreatmentPlanTableProps> = ({ onDataUpdate, treatmentPlan, patientid }) => {
     const handleCheckboxClick = async (index: number, currentStatus: boolean) => {
         const newStatus = !currentStatus;
 
@@ -27,6 +28,7 @@ const TreatmentPlanTable: React.FC<TreatmentPlanTableProps> = ({ treatmentPlan, 
                     TreatmentPlan: updatedTreatmentPlan
                 });
             }
+            onDataUpdate();
         } catch (error) {
             alert(error);
         }
@@ -45,6 +47,7 @@ const TreatmentPlanTable: React.FC<TreatmentPlanTableProps> = ({ treatmentPlan, 
                     TreatmentPlan: updatedTreatmentPlan
                 });
             }
+            onDataUpdate()
         } catch (error) {
             alert(error);
         }

@@ -5,6 +5,7 @@ import PatientModal from './PatientModal';
 
 function NavBar() {
   const [modalShow, setModalShow] = React.useState(false);
+
   return (
     <Navbar bg="dark" data-bs-theme="dark" fixed="top">
       <Navbar.Brand className='px-5' href="/">Navbar</Navbar.Brand>

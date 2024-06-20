@@ -24,7 +24,7 @@ interface PatientData {
 }
 
 const PatientDetails: React.FC = () => {
-    const { id } = useParams<{ id: string }>();
+    const { id = "" } = useParams<{ id: string }>();
     const [patientData, setPatientData] = useState<PatientData | null>(null);
 
     useEffect(() => {
@@ -43,7 +43,7 @@ const PatientDetails: React.FC = () => {
     }, [id]);
 
     if (!patientData) {
-        return <LoadingSpinner/>;
+        return <LoadingSpinner />;
     }
 
     return (
@@ -70,7 +70,7 @@ const PatientDetails: React.FC = () => {
                             <Card style={{ backgroundColor: "black" }}>
                                 <ListGroup variant="flush">
                                     <ListGroup.Item>Date Of Birth: {patientData.dateOfBirth}</ListGroup.Item>
-                                    <ListGroup.Item>Treatment Status: {patientData.status ? 'Active' : 'Inactive'}</ListGroup.Item>
+                                    <ListGroup.Item>Treatment Status: {patientData.status ? 'Completed' : 'Planned'}</ListGroup.Item>
                                     <ListGroup.Item>Address: {patientData.address}</ListGroup.Item>
                                     <ListGroup.Item>Contact: {patientData.contact}</ListGroup.Item>
                                     <ListGroup.Item>E-Mail: {patientData.email}</ListGroup.Item>
