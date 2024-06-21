@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import React from 'react';
+import React, { useState, ChangeEvent } from 'react';
 import { Modal, Form } from 'react-bootstrap';
 import { doc, updateDoc } from 'firebase/firestore';
 import { firestore } from '../lib/firebase';
@@ -11,17 +11,20 @@ interface DiagnosisModalProps {
   onDataUpdate: () => {}
 }
 
+interface FormData {
+  diagnosis: string
+}
+
 const DiagnosisModal: FC<DiagnosisModalProps> = (props) => {
+  const [formData, setFormData] = useState<FormData>({
+    diagnosis: ''
+  });
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-
-    const diagnosis = formData.get('diagnosis') as string;
-
     try {
       const patientRef = doc(firestore, 'patients', props.patientid);
       await updateDoc(patientRef, {
-        'ExaminationData.Diagnosis': diagnosis
+        'ExaminationData.Diagnosis': formData.diagnosis
       });
       props.onDataUpdate();
       props.onHide();
@@ -29,6 +32,14 @@ const DiagnosisModal: FC<DiagnosisModalProps> = (props) => {
       alert(error);
     }
   }
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = event.target;
+    setFormData({
+        ...formData,
+        [name]: value
+    });
+}
 
   return (
     <div>
@@ -45,7 +56,7 @@ const DiagnosisModal: FC<DiagnosisModalProps> = (props) => {
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleSubmit}>
-            <textarea name="diagnosis" placeholder='Diagnosis' className='form-control' /> <br />
+            <textarea name="diagnosis" placeholder='Diagnosis' className='form-control' value={formData.diagnosis} onChange={handleChange}/> <br />
             <input type="submit" className='btn btn-danger' value="Save" />
           </Form>
         </Modal.Body>

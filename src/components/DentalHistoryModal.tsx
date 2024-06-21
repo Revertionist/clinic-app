@@ -1,7 +1,7 @@
-import React, { useState, ChangeEvent, FormEvent } from 'react';
+import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import { Modal, Form } from 'react-bootstrap';
 import { firestore } from '../lib/firebase';
-import { doc, updateDoc } from 'firebase/firestore';
+import { doc, updateDoc, getDoc } from 'firebase/firestore';
 
 interface DentalHistoryModalProps {
     show: boolean;
@@ -49,6 +49,34 @@ const DentalHistoryModal: React.FC<DentalHistoryModalProps> = (props) => {
             [name]: value
         });
     }
+
+    useEffect(() => {
+        const fetchData = async () => {
+            if (props.patientid) {
+                const patientRef = doc(firestore, 'patients', props.patientid);
+                const patientSnap = await getDoc(patientRef);
+
+                if (patientSnap.exists()) {
+                    const data = patientSnap.data();
+                    setFormData({
+                        chiefComplaint: data.ExaminationData?.['Clinical Examination']?.['Extra Oral Examination'] || '',
+                        illnessHistory: data.ExaminationData?.['Clinical Examination']?.['Intra Oral Examination'] || '',
+                        dentalHistory: data.ExaminationData?.['Clinical Examination']?.['Intra Oral Examination'] || ''
+                    });
+                } else {
+                    setFormData({
+                        chiefComplaint: '',
+                        illnessHistory: '',
+                        dentalHistory:'',
+                    });
+                }
+            }
+        };
+
+        if (props.show) {
+            fetchData();
+        }
+    }, [props.patientid, props.show]);
 
     return (
         <div>

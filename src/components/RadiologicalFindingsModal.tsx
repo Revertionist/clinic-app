@@ -1,33 +1,70 @@
-import React from 'react'
-import { Modal, Form } from 'react-bootstrap'
-import { doc, updateDoc } from 'firebase/firestore';
+import React, { useState, useEffect, ChangeEvent } from 'react';
+import { Modal, Form } from 'react-bootstrap';
+import { doc, updateDoc, getDoc } from 'firebase/firestore';
 import { firestore } from '../lib/firebase';
 
-interface RadioplogicalFindingsModalProps {
+interface RadiologicalFindingsModalProps {
     show: boolean;
     onHide: () => void;
     patientid: string;
-    onDataUpdate: () => {}
+    onDataUpdate: () => void;
 }
 
-const RadiologicalFindingsModal: React.FC<RadioplogicalFindingsModalProps> = (props) => {
+interface FormData {
+    radiologicalFindings: string;
+}
+
+const RadiologicalFindingsModal: React.FC<RadiologicalFindingsModalProps> = (props) => {
+    const [formData, setFormData] = useState<FormData>({
+        radiologicalFindings: '',
+    });
+
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const formData = new FormData(event.currentTarget);
-
-        const radiologicalFindings = formData.get('radiological-findings') as string;
-
         try {
             const patientRef = doc(firestore, 'patients', props.patientid);
             await updateDoc(patientRef, {
-                'ExaminationData.Radiological Findings': radiologicalFindings,
+                'ExaminationData.Radiological Findings': formData.radiologicalFindings,
             });
             props.onDataUpdate();
-            props.onHide()
+            props.onHide();
         } catch (error) {
-            alert(error)
+            alert(error);
         }
-    }
+    };
+
+    const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = event.target;
+        setFormData({
+            ...formData,
+            [name]: value,
+        });
+    };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            if (props.patientid) {
+                const patientRef = doc(firestore, 'patients', props.patientid);
+                const patientSnap = await getDoc(patientRef);
+
+                if (patientSnap.exists()) {
+                    const data = patientSnap.data();
+                    setFormData({
+                        radiologicalFindings: data.ExaminationData?.['Radiological Findings'] || '',
+                    });
+                } else {
+                    setFormData({
+                        radiologicalFindings: '',
+                    });
+                }
+            }
+        };
+
+        if (props.show) {
+            fetchData();
+        }
+    }, [props.patientid, props.show]);
+
     return (
         <div>
             <Modal
@@ -43,13 +80,19 @@ const RadiologicalFindingsModal: React.FC<RadioplogicalFindingsModalProps> = (pr
                 </Modal.Header>
                 <Modal.Body>
                     <Form onSubmit={handleSubmit}>
-                        <textarea name="radiological-findings" className='form-control' placeholder='Radiological Findings' /> <br />
-                        <input className='btn btn-danger' type="submit" value="Save" />
+                        <textarea
+                            name="radiologicalFindings"
+                            className="form-control"
+                            placeholder="Radiological Findings"
+                            value={formData.radiologicalFindings}
+                            onChange={handleChange}
+                        /> <br />
+                        <input className="btn btn-danger" type="submit" value="Save" />
                     </Form>
                 </Modal.Body>
             </Modal>
         </div>
-    )
-}
+    );
+};
 
-export default RadiologicalFindingsModal
+export default RadiologicalFindingsModal;
