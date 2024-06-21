@@ -26,7 +26,6 @@ const ExamData: React.FC<ExamDataProps> = ({ patientid }) => {
   const [diagnosisModalShow, setDiagnosisModalShow] = React.useState(false);
   const [treatmentModalShow, setTreatmentModalShow] = React.useState(false);
   const [treatmentPlan, setTreatmentPlan] = React.useState([]);
-  const [treatmentNoteModalShow, setTreatmentNoteModalShow] = React.useState(false);
   const [forceRerender, setForceRerender] = React.useState(false);
   const [examinationDetails, setExaminationDetails] = React.useState({})
   const navigate = useNavigate()
@@ -174,13 +173,6 @@ const ExamData: React.FC<ExamDataProps> = ({ patientid }) => {
         <Accordion.Item eventKey="5">
           <Accordion.Header>Treatment Note</Accordion.Header>
           <Accordion.Body>
-            <Button variant='outline-danger' onClick={() => setTreatmentNoteModalShow(true)}>Add Treatment Note</Button>
-            <TreatmentNoteModal
-              show={treatmentNoteModalShow}
-              onHide={() => setTreatmentNoteModalShow(false)}
-              patientid={patientid}
-              onDataUpdate={refreshPlan}
-            /> <br />
             <Button variant='outline-danger' onClick={() => { navigate(`/${patientid}/treatment_note`) }}>View Treatment Note</Button>
           </Accordion.Body>
         </Accordion.Item>
