@@ -8,7 +8,7 @@ import NavBar from './components/NavBar'
 function App() {
 
   return (
-    <div>
+    <>
       <NavBar />
       <div style={{ paddingTop: "80px" }}>
         <Routes>
@@ -17,7 +17,7 @@ function App() {
           <Route path="/:id/treatment_note" element={<TreatmentNoteData />} />
         </Routes>
       </div>
-    </div>
+    </>
 
   )
 }

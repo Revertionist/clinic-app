@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Accordion, Button, CardFooter } from 'react-bootstrap';
+import { Accordion, Button } from 'react-bootstrap';
 import DentalHistoryModal from './DentalHistoryModal';
 import MedicalHistoryModal from './MedicalHistoryModal';
 import ClinicalExaminationModal from './ClinicalExaminationModal';
@@ -8,7 +8,6 @@ import DiagnosisModal from './DiagnosisModal';
 import ExaminationDetailsCard from './ExaminationDetailsCard';
 import TreatmentModal from './TreatmentModal';
 import TreatmentPlanTable from './TreatmentPlanTable';
-import TreatmentNoteModal from './TreatmentNoteModal';
 import { firestore } from '../lib/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
