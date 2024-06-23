@@ -19,8 +19,8 @@ interface TableDataProps {
 
 const TableData: React.FC<TableDataProps> = ({ dataValues }) => {
     const [patients, setPatients] = useState(dataValues);
-    const [modalShow, setModalShow] = React.useState(false);
-    const [selectedPatientId, setSelectedPatientId] = React.useState<string | null>(null);
+    const [modalShow, setModalShow] = useState(false);
+    const [selectedPatientId, setSelectedPatientId] = useState<string | null>(null);
     const navigate = useNavigate();
 
     const handleCheckboxClick = async (patientId: string, currentStatus: boolean) => {

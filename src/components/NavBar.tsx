@@ -7,7 +7,7 @@ function NavBar() {
     <Navbar className='no-print' bg="dark" data-bs-theme="dark" fixed="top">
       <Navbar.Brand className='px-5' href="/">Navbar</Navbar.Brand>
       <Nav className="me-auto">
-        <Nav.Link href="/">Home</Nav.Link>
+        
       </Nav>
 
       <Form className="px-5 d-flex">
