@@ -21,7 +21,7 @@ const DeletionConfirmation: React.FC<DeletionConfirmationProps> = (props) => {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <h4>Are you sure you want to delete this data?</h4>
+                <h5>Are you sure you want to delete this data?</h5>
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={props.onHide}>Cancel</Button>

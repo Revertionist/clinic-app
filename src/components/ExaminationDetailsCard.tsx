@@ -14,7 +14,7 @@ const ExaminationDetailsCard: React.FC<ExaminationDetailsCardProps> = (props) =>
 
     return (
         <div>
-            <Card border='info' className="text-center">
+            <Card  className="text-center">
                 <h5>
                     <Card.Header>{examinationType}</Card.Header>
                     <Card.Body>
