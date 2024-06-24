@@ -1,6 +1,6 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Modal, Form, FormSelect } from 'react-bootstrap';
-import { addDoc, collection } from 'firebase/firestore';
+import { addDoc, collection, getDocs, query, orderBy, limit } from 'firebase/firestore';
 import { firestore } from '../lib/firebase';
 
 interface PatientModalProps {
@@ -11,6 +11,23 @@ interface PatientModalProps {
 }
 
 const PatientModal: FC<PatientModalProps> = (props) => {
+    const [lastPatientPNR, setLastPatientPNR] = useState<string>("");
+
+    useEffect(() => {
+        const fetchLastPatientPNR = async () => {
+            if (!props.firstpatient) {
+                const q = query(collection(firestore, "patients"), orderBy("pnrNo", "desc"), limit(1));
+                const querySnapshot = await getDocs(q);
+                if (!querySnapshot.empty) {
+                    const lastPatient = querySnapshot.docs[0].data();
+                    setLastPatientPNR(lastPatient.pnrNo || "prev");
+                }
+            }
+        };
+
+        fetchLastPatientPNR();
+    }, [props.firstpatient]);
+
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
@@ -18,7 +35,7 @@ const PatientModal: FC<PatientModalProps> = (props) => {
         if (props.firstpatient) {
             pnr = formData.get('pnr-no') as string;
         } else {
-            pnr = "prev";
+            pnr = (Number(lastPatientPNR)+1).toString();
         }
 
         const person = {
@@ -48,7 +65,8 @@ const PatientModal: FC<PatientModalProps> = (props) => {
 
     return (
         <Modal
-            {...props}
+            show={props.show}
+            onHide={props.onHide}
             size="lg"
             aria-labelledby="contained-modal-title-vcenter"
             centered

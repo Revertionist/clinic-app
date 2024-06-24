@@ -2,6 +2,8 @@ import React from 'react';
 import { Table, Button } from 'react-bootstrap';
 import { firestore } from '../lib/firebase';
 import { doc, updateDoc, getDoc } from 'firebase/firestore';
+import { useState } from 'react';
+import DeletionConfirmation from './DeletionConfirmation';
 
 interface TreatmentPlanTableProps {
     treatmentPlan: Array<{
@@ -13,6 +15,8 @@ interface TreatmentPlanTableProps {
 }
 
 const TreatmentPlanTable: React.FC<TreatmentPlanTableProps> = ({ onDataUpdate, treatmentPlan, patientid }) => {
+    const [modalShow, setModalShow] = useState(false);
+    const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
     const handleCheckboxClick = async (index: number, currentStatus: boolean) => {
         const newStatus = !currentStatus;
 
@@ -73,12 +77,17 @@ const TreatmentPlanTable: React.FC<TreatmentPlanTableProps> = ({ onDataUpdate, t
                                 <input type="checkbox" checked={plan.Status} onChange={() => handleCheckboxClick(index, plan.Status)} />
                             </td>
                             <td>
-                                <Button variant='outline-danger' onClick={() => handleDeletion(index)}>X</Button>
+                                <Button variant='outline-danger' onClick={() => { setSelectedIndex(index); setModalShow(true); }}>X</Button>
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </Table>
+            <DeletionConfirmation
+                show={modalShow}
+                onHide={() => setModalShow(false)}
+                onDelete={() => { if (selectedIndex !== null) handleDeletion(selectedIndex); }}
+            />
         </div>
     );
 };
