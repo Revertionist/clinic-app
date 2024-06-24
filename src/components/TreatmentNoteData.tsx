@@ -6,6 +6,7 @@ import { getDoc, doc, updateDoc } from 'firebase/firestore';
 import { Table, Container, Button } from 'react-bootstrap';
 import TreatmentNoteModal from './TreatmentNoteModal';
 import DeletionConfirmation from './DeletionConfirmation';
+import { useNavigate } from 'react-router-dom';
 
 const TreatmentNoteData: React.FC = () => {
     const { id = "" } = useParams<{ id: string }>();
@@ -15,6 +16,7 @@ const TreatmentNoteData: React.FC = () => {
     const [forceRerender, setForceRerender] = useState(false);
     const [modalShow, setModalShow] = useState(false);
     const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+    const navigate = useNavigate()
 
     useEffect(() => {
         const getTreatmentNote = async () => {
@@ -64,6 +66,8 @@ const TreatmentNoteData: React.FC = () => {
             <Container style={{ alignItems: 'center' }}>
                 <h1>Treatment Note</h1>
                 <hr />
+                <Button variant='danger' className='no-print w-100' onClick={() => setTreatmentNoteModalShow(true)}>Add Treatment Note</Button>
+                <hr className='no-print'/>
                 <Table hover>
                     <thead>
                         <tr>
@@ -88,7 +92,7 @@ const TreatmentNoteData: React.FC = () => {
                         ))}
                     </tbody>
                 </Table>
-                <Button variant='outline-danger' className='no-print' onClick={() => setTreatmentNoteModalShow(true)}>Add Treatment Note</Button>
+
                 <TreatmentNoteModal
                     show={treatmentNoteModalShow}
                     onHide={() => setTreatmentNoteModalShow(false)}
@@ -96,7 +100,8 @@ const TreatmentNoteData: React.FC = () => {
                     onDataUpdate={refreshPlan}
                 />
                 <br />
-                <Button className='no-print' onClick={handlePrint} variant='outline-danger'>Print</Button>
+                <Button className='no-print' onClick={() => { navigate(`/${id}`) }} variant='outline-danger'>Go Back</Button>
+                <Button className='no-print float-end' onClick={handlePrint} variant='outline-success'>Print</Button>
             </Container>
             <DeletionConfirmation
                 show={modalShow}

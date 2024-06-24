@@ -52,8 +52,8 @@ const TableData: React.FC<TableDataProps> = ({ dataValues }) => {
     };
 
     const patientSearch = () => {
-        const temp:any = []
-        if(patientSearchData=='') {
+        const temp: any = []
+        if (patientSearchData == '') {
             setPatients(dataValues)
             return
         }
@@ -61,20 +61,20 @@ const TableData: React.FC<TableDataProps> = ({ dataValues }) => {
             if (element.patientName.toLowerCase().includes(patientSearchData.toLowerCase())) {
                 temp.push(element)
             }
-            if(element.contact.toString().includes(patientSearchData)) {
+            if (element.contact.toString().includes(patientSearchData)) {
                 temp.push(element)
             }
         });
         setPatients(temp)
     }
 
-    const titleValues = ["Patient Name", "Phone Number", "Date Of Birth", "Treatment Status"];
-    const headValues = ["patientName", "contact", "dateOfBirth"];
+    const titleValues = ["PNR No", "Patient Name", "Phone Number", "Date Of Birth", "Treatment Status"];
+    const headValues = ["pnrNo", "patientName", "contact", "dateOfBirth"];
 
     return (
         <>
             <InputGroup>
-                <input value={patientSearchData} placeholder="Search Patient" className="form-control" type="text" onChange={(e)=>{setPatientSeatchData(e.target.value)}}/>
+                <input value={patientSearchData} placeholder="Search Patient" className="form-control" type="text" onChange={(e) => { setPatientSeatchData(e.target.value) }} />
                 <Button variant="outline-success" onClick={patientSearch}>Search</Button>
             </InputGroup>
             <hr />

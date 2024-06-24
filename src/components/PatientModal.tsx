@@ -7,15 +7,22 @@ interface PatientModalProps {
     show: boolean;
     onHide: () => void;
     onDataUpdate: () => void;
+    firstpatient: boolean;
 }
 
 const PatientModal: FC<PatientModalProps> = (props) => {
-
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
+        let pnr = '';
+        if (props.firstpatient) {
+            pnr = formData.get('pnr-no') as string;
+        } else {
+            pnr = "prev";
+        }
 
         const person = {
+            pnrNo: pnr,
             patientName: formData.get('patient-name') as string,
             dateOfBirth: formData.get('date-of-birth') as string,
             bloodGroup: formData.get('blood-group') as string,
@@ -27,7 +34,7 @@ const PatientModal: FC<PatientModalProps> = (props) => {
             contact: formData.get('contact') as string,
             email: formData.get('email') as string,
             guardian: formData.get('guardian') as string,
-            status: formData.get('status') ? true : false
+            status: formData.get('status') ? true : false,
         };
 
         try {
@@ -53,6 +60,12 @@ const PatientModal: FC<PatientModalProps> = (props) => {
             </Modal.Header>
             <Modal.Body>
                 <Form onSubmit={handleSubmit}>
+                    {props.firstpatient && (
+                        <div>
+                            <input type="text" name='pnr-no' placeholder='PNR No.' className='form-control' required />
+                            <br />
+                        </div>
+                    )}
                     <input type="text" name='patient-name' placeholder='Patient Name' className='form-control' required /> <br />
                     <input type="date" name="date-of-birth" className='form-control' required /> <br />
                     <FormSelect aria-label="Default select example" name="blood-group" className='form-control' required>

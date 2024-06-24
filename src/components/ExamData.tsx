@@ -55,7 +55,7 @@ const ExamData: React.FC<ExamDataProps> = ({ patientid }) => {
     <div className='px-5'>
       <Accordion>
         <Accordion.Item eventKey="0">
-          <Accordion.Header>Dental History</Accordion.Header>
+          <Accordion.Header><b>Dental History</b></Accordion.Header>
           <Accordion.Body>
             <ExaminationDetailsCard
               ExaminationData={examinationDetails}
@@ -74,7 +74,7 @@ const ExamData: React.FC<ExamDataProps> = ({ patientid }) => {
 
       <Accordion>
         <Accordion.Item eventKey="1">
-          <Accordion.Header>Medical History</Accordion.Header>
+          <Accordion.Header><b>Medical History</b></Accordion.Header>
           <Accordion.Body>
             <ExaminationDetailsCard
               ExaminationData={examinationDetails}
@@ -93,7 +93,7 @@ const ExamData: React.FC<ExamDataProps> = ({ patientid }) => {
 
       <Accordion>
         <Accordion.Item eventKey="2">
-          <Accordion.Header>Clinical Examination</Accordion.Header>
+          <Accordion.Header><b>Clinical Examination</b></Accordion.Header>
           <Accordion.Body>
             <ExaminationDetailsCard
               ExaminationData={examinationDetails}
@@ -112,7 +112,7 @@ const ExamData: React.FC<ExamDataProps> = ({ patientid }) => {
 
       <Accordion>
         <Accordion.Item eventKey="3">
-          <Accordion.Header>Radiological Findings</Accordion.Header>
+          <Accordion.Header><b>Radiological Findings</b></Accordion.Header>
           <Accordion.Body>
             <ExaminationDetailsCard
               ExaminationData={examinationDetails}
@@ -131,7 +131,7 @@ const ExamData: React.FC<ExamDataProps> = ({ patientid }) => {
 
       <Accordion>
         <Accordion.Item eventKey="4">
-          <Accordion.Header>Diagnosis</Accordion.Header>
+          <Accordion.Header><b>Diagnosis</b></Accordion.Header>
           <Accordion.Body>
             <ExaminationDetailsCard
               ExaminationData={examinationDetails}
@@ -150,7 +150,7 @@ const ExamData: React.FC<ExamDataProps> = ({ patientid }) => {
 
       <Accordion>
         <Accordion.Item eventKey="5">
-          <Accordion.Header>Treatment Plan</Accordion.Header>
+          <Accordion.Header><b>Treatment Plan</b></Accordion.Header>
           <Accordion.Body>
             <TreatmentPlanTable
               treatmentPlan={treatmentPlan}
@@ -170,12 +170,13 @@ const ExamData: React.FC<ExamDataProps> = ({ patientid }) => {
 
       <Accordion>
         <Accordion.Item eventKey="5">
-          <Accordion.Header>Treatment Note</Accordion.Header>
+          <Accordion.Header><b>Treatment Note</b></Accordion.Header>
           <Accordion.Body>
             <Button variant='outline-danger' onClick={() => { navigate(`/${patientid}/treatment_note`) }}>View Treatment Note</Button>
           </Accordion.Body>
         </Accordion.Item>
-      </Accordion>
+      </Accordion> <br />
+      <Button onClick={() => { navigate('/') }} variant='outline-danger'>Go Back</Button>
     </div>
   );
 };

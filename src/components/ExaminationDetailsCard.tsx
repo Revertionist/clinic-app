@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card } from 'react-bootstrap';
+import { Card, Table } from 'react-bootstrap';
 
 interface ExaminationDetailsCardProps {
     ExaminationData: {
@@ -14,29 +14,46 @@ const ExaminationDetailsCard: React.FC<ExaminationDetailsCardProps> = (props) =>
 
     return (
         <div>
-            <Card  className="text-center">
-                <h5>
-                    <Card.Header>{examinationType}</Card.Header>
-                    <Card.Body>
-                        {relevantData ? (
-                            typeof relevantData === 'object' ? (
-                                <div>
-                                    {Object.keys(relevantData).map((key) => (
-                                        <div key={key}>
-                                            <strong>{key}:</strong> {relevantData[key]}
-                                        </div>
-                                    ))}
-                                </div>
-                            ) : (
-                                <div>
-                                    {relevantData}
-                                </div>
-                            )
+            <Card className="text-center">
+
+                <Card.Header>{examinationType}</Card.Header>
+                <Card.Body>
+                    {relevantData ? (
+                        typeof relevantData === 'object' ? (
+
+                            <Table responsive>
+                                <thead>
+                                    <tr>
+                                        {Object.keys(relevantData).map((key) => (
+
+                                            <th key={key}>
+                                                <h5>{key}</h5>
+                                            </th>
+
+                                        ))}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        {Object.keys(relevantData).map((key) => (
+                                            <td key={key}>
+                                                {relevantData[key]}
+                                            </td>
+                                        ))}
+                                    </tr>
+                                </tbody>
+                            </Table>
+
                         ) : (
-                            <div>No data available</div>
-                        )}
-                    </Card.Body>
-                </h5>
+                            <div>
+                                <h4>{relevantData}</h4>
+                            </div>
+                        )
+                    ) : (
+                        <div>No data available</div>
+                    )}
+                </Card.Body>
+
             </Card>
         </div>
     );

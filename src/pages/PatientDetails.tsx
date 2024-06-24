@@ -8,6 +8,7 @@ import ExamData from '../components/ExamData';
 import LoadingSpinner from '../components/Spinner';
 
 interface PatientData {
+    pnrNo: string;
     patientName: string;
     contact: string;
     dateOfBirth: string;
@@ -56,25 +57,25 @@ const PatientDetails: React.FC = () => {
                         <Col>
                             <Card style={{ backgroundColor: "black" }}>
                                 <ListGroup variant="flush">
-                                    <ListGroup.Item>Patient Name: {patientData.patientName}</ListGroup.Item>
-                                    <ListGroup.Item>Phone Number: {patientData.contact}</ListGroup.Item>
-                                    <ListGroup.Item>Gender: {patientData.gender}</ListGroup.Item>
-                                    <ListGroup.Item>Blood Group: {patientData.bloodGroup}</ListGroup.Item>
-                                    <ListGroup.Item>Nationality: {patientData.nationality}</ListGroup.Item>
-                                    <ListGroup.Item>Occupation: {patientData.occupation}</ListGroup.Item>
-                                    <ListGroup.Item>Marital Status: {patientData.maritalStatus}</ListGroup.Item>
+                                    <ListGroup.Item><b>PNR No</b>: {patientData.pnrNo}</ListGroup.Item>
+                                    <ListGroup.Item><b>Patient Name</b>: {patientData.patientName}</ListGroup.Item>
+                                    <ListGroup.Item><b>Date Of Birth</b>: {patientData.dateOfBirth}</ListGroup.Item>
+                                    <ListGroup.Item><b>Gender</b>: {patientData.gender}</ListGroup.Item>
+                                    <ListGroup.Item><b>Blood Group</b>: {patientData.bloodGroup}</ListGroup.Item>
+                                    <ListGroup.Item><b>Marital Status</b>: {patientData.maritalStatus}</ListGroup.Item>
+                                    <ListGroup.Item><b>Occupation</b>: {patientData.occupation}</ListGroup.Item>
                                 </ListGroup>
                             </Card>
                         </Col>
                         <Col>
                             <Card style={{ backgroundColor: "black" }}>
                                 <ListGroup variant="flush">
-                                    <ListGroup.Item>Date Of Birth: {patientData.dateOfBirth}</ListGroup.Item>
-                                    <ListGroup.Item>Treatment Status: {patientData.status ? 'Completed' : 'Planned'}</ListGroup.Item>
-                                    <ListGroup.Item>Address: {patientData.address}</ListGroup.Item>
-                                    <ListGroup.Item>Contact: {patientData.contact}</ListGroup.Item>
-                                    <ListGroup.Item>E-Mail: {patientData.email}</ListGroup.Item>
-                                    <ListGroup.Item>Guardian: {patientData.guardian}</ListGroup.Item>
+                                    <ListGroup.Item><b>Nationality</b>: {patientData.nationality}</ListGroup.Item>
+                                    <ListGroup.Item><b>Address</b>: {patientData.address}</ListGroup.Item>
+                                    <ListGroup.Item><b>Phone Number</b>: {patientData.contact}</ListGroup.Item>
+                                    <ListGroup.Item><b>E-Mail</b>: {patientData.email}</ListGroup.Item>
+                                    <ListGroup.Item><b>Guardian</b>: {patientData.guardian}</ListGroup.Item>
+                                    <ListGroup.Item><b>Treatment Status</b>: {patientData.status ? 'Completed' : 'Planned'}</ListGroup.Item>
                                 </ListGroup>
                             </Card>
                         </Col>
