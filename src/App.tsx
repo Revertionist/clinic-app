@@ -10,7 +10,7 @@ function App() {
   return (
     <>
       <NavBar />
-      <div style={{ paddingTop: "80px" }}>
+      <div style={{ paddingTop: "20px" }}>
         <Routes>
           <Route path='/' element={<MainPage />} />
           <Route path="/:id" element={<PatientDetails />} />

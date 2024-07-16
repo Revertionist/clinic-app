@@ -1,5 +1,5 @@
 import React, { useState, ChangeEvent, useEffect } from 'react'
-import { Modal, Form, FormSelect } from 'react-bootstrap'
+import { Modal, Form, textarea } from 'react-bootstrap'
 import { firestore } from '../lib/firebase';
 import { doc, updateDoc, getDoc } from 'firebase/firestore';
 
@@ -114,99 +114,66 @@ const MedicalHistoryModal: React.FC<MedicalHistoryModalProps> = (props) => {
                 <Modal.Body>
                     <Form onSubmit={handleSubmit}>
                         Cardiovascular:
-                        <FormSelect
-                            aria-label="Default select example"
+                        <textarea
+                            className='form-control'
                             className='form-control'
                             name='cardiovascular'
                             value={formData.cardiovascular}
-                            onChange={handleChange}
-                        >
-                            <option value="">Select</option>
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
-                        </FormSelect> <br />
+                            onChange={handleChange} />
+                        <br />
                         Respiratory:
-                        <FormSelect
-                            aria-label="Default select example"
+                        <textarea
+                            className='form-control'
                             name='respiratory'
                             value={formData.respiratory}
                             onChange={handleChange}
-                        >
-                            <option value="">Select</option>
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
-                        </FormSelect> <br />
+                        /> <br />
                         Gastrointestinal:
-                        <FormSelect
-                            aria-label="Default select example"
+                        <textarea
+                            className='form-control'
                             name='gastrointestinal'
                             value={formData.gastrointestinal}
                             onChange={handleChange}
-                        >
-                            <option value="">Select</option>
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
-                        </FormSelect> <br />
+                        /><br />
                         Neutral:
-                        <FormSelect
-                            aria-label="Default select example"
+                        <textarea
+                            className='form-control'
                             name='neutral'
                             value={formData.neutral}
                             onChange={handleChange}
-                        >
-                            <option value="">Select</option>
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
-                        </FormSelect> <br />
+                        /> <br />
                         Hepatic:
-                        <FormSelect
-                            aria-label="Default select example"
+                        <textarea
+                            className='form-control'
                             name='hepatic'
                             value={formData.hepatic}
                             onChange={handleChange}
-                        >
-                            <option value="">Select</option>
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
-                        </FormSelect> <br />
+                        /> <br />
                         Renal:
-                        <FormSelect
-                            aria-label="Default select example"
+                        <textarea
+                            className='form-control'
                             name='renal'
                             value={formData.renal}
                             onChange={handleChange}
-                        >
-                            <option value="">Select</option>
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
-                        </FormSelect> <br />
+                        /> <br />
                         Endocrine:
-                        <FormSelect
-                            aria-label="Default select example"
+                        <textarea
+                            className='form-control'
                             name='endocrine'
                             value={formData.endocrine}
                             onChange={handleChange}
-                        >
-                            <option value="">Select</option>
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
-                        </FormSelect> <br />
+                        /> <br />
                         Diabetes:
-                        <FormSelect
-                            aria-label="Default select example"
+                        <textarea
+                            className='form-control'
                             name='diabetes'
                             value={formData.diabetes}
                             onChange={handleChange}
-                        >
-                            <option value="">Select</option>
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
-                        </FormSelect> <br />
+                        /> <br />
                         Allergies:
                         <textarea
                             name="allergies"
                             className='form-control'
-                            placeholder='Allergic To'
                             value={formData.allergies}
                             onChange={handleChange}
                         /> <br />

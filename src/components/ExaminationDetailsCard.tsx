@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Table } from 'react-bootstrap';
+import { Card, ListGroup, ListGroupItem, Table } from 'react-bootstrap';
 
 interface ExaminationDetailsCardProps {
     ExaminationData: {
@@ -20,29 +20,19 @@ const ExaminationDetailsCard: React.FC<ExaminationDetailsCardProps> = (props) =>
                 <Card.Body>
                     {relevantData ? (
                         typeof relevantData === 'object' ? (
+                            <ListGroup>
+                                {Object.keys(relevantData).map((key) => (
+                                    <ListGroup.Item key={key}>
 
-                            <Table responsive>
-                                <thead>
-                                    <tr>
-                                        {Object.keys(relevantData).map((key) => (
+                                        <strong>{key}:</strong> {relevantData[key]}
 
-                                            <th key={key}>
-                                                <h5>{key}</h5>
-                                            </th>
+                                    </ListGroup.Item>
 
-                                        ))}
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        {Object.keys(relevantData).map((key) => (
-                                            <td key={key}>
-                                                {relevantData[key]}
-                                            </td>
-                                        ))}
-                                    </tr>
-                                </tbody>
-                            </Table>
+                                ))}
+                                <br />
+                            </ListGroup>
+
+
 
                         ) : (
                             <div>
