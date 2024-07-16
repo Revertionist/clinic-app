@@ -1,5 +1,5 @@
 import React, { useState, ChangeEvent, useEffect } from 'react'
-import { Modal, Form, textarea } from 'react-bootstrap'
+import { Modal, Form } from 'react-bootstrap'
 import { firestore } from '../lib/firebase';
 import { doc, updateDoc, getDoc } from 'firebase/firestore';
 
@@ -115,7 +115,6 @@ const MedicalHistoryModal: React.FC<MedicalHistoryModalProps> = (props) => {
                     <Form onSubmit={handleSubmit}>
                         Cardiovascular:
                         <textarea
-                            className='form-control'
                             className='form-control'
                             name='cardiovascular'
                             value={formData.cardiovascular}
